@@ -25,4 +25,8 @@ export class Player {
       this.height,
     );
   }
+  setState(state) {
+    this.currentState = this.states[state];
+    this.currentState.enter();
+  }
 }
