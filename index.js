@@ -9,14 +9,18 @@ window.addEventListener("load", () => {
   const ctx = canvas.getContext("2d");
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
+  let lastTime = 0;
 
   const player = new Player(canvas.width, canvas.height);
   const input = new InputHandler();
-  function animate() {
+  function animate(timeStamp) {
+    const deltaTime = timeStamp - lastTime;
+    lastTime = timeStamp;
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    player.draw(ctx);
+    player.update(input.lastKey);
+    player.draw(ctx, deltaTime);
+    drawStatusText(ctx, input, player);
     requestAnimationFrame(animate);
-    drawStatusText(ctx, input);
   }
-  animate();
+  animate(0);
 });
